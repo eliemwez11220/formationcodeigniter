@@ -44,10 +44,15 @@
                     <div class="navbar-custom-menu">
                         <ul class="nav navbar-nav">
                         <!-- User Account: style can be found in dropdown.less -->
+                             <?php
+                             if (isset($this->session->isLoggedIn) && $this->session->isLoggedIn == TRUE):?>
                             <li class="dropdown user user-menu">
+                                
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     <img src="<?php echo site_url('resources/img/user2-160x160.jpg');?>" class="user-image" alt="User Image">
-                                    <span class="hidden-xs">Alexander Pierce</span>
+                                    <span class="hidden-xs">
+                                        <?= $this->session->fullname; ?>
+                                    </span>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <!-- User image -->
@@ -55,8 +60,8 @@
                                         <img src="<?php echo site_url('resources/img/user2-160x160.jpg');?>" class="img-circle" alt="User Image">
 
                                     <p>
-                                        Alexander Pierce - Web Developer
-                                        <small>Member since Nov. 2012</small>
+                                        <?= $this->session->fullname; ?>
+                                        <small>Créé depuis <?= $this->session->created; ?></small>
                                     </p>
                                     </li>
                                     <!-- Menu Footer-->
@@ -65,17 +70,28 @@
                                             <a href="#" class="btn btn-default btn-flat">Profile</a>
                                         </div>
                                         <div class="pull-right">
-                                            <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                                            <a onclick="return confirm('Quitter la session?');" href="<?= site_url('auth/logOut');?>" class="btn btn-danger btn-flat">Sign out</a>
                                         </div>
                                     </li>
                                 </ul>
                             </li>
+                             <?php else: ?>
+                                <li class="nav-item">
+                                     
+                                        <div class="text-center">
+                                            <a href="<?= site_url('auth/');?>" class="btn btn-success btn-flat">Login</a>
+                                        </div>
+                                    </li>
+                             <?php endif; ?>
                         </ul>
                     </div>
                 </nav>
             </header>
             <!-- Left side column. contains the logo and sidebar -->
             <aside class="main-sidebar">
+                <?php
+                    if (isset($this->session->isLoggedIn) && $this->session->isLoggedIn == TRUE):
+                ?>
                 <!-- sidebar: style can be found in sidebar.less -->
                 <section class="sidebar">
                     <!-- Sidebar user panel -->
@@ -84,7 +100,8 @@
                             <img src="<?php echo site_url('resources/img/user2-160x160.jpg');?>" class="img-circle" alt="User Image">
                         </div>
                         <div class="pull-left info">
-                            <p>Alexander Pierce</p>
+                            <p><?= $this->session->fullname; ?></p>
+                            <small>Role: <?= $this->session->role; ?></small>
                             <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                         </div>
                     </div>
@@ -96,70 +113,72 @@
                                 <i class="fa fa-dashboard"></i> <span>Tableau de bord</span>
                             </a>
                         </li>
-						<li>
+                        <li>
                             <a href="#">
                                 <i class="fa fa-binoculars"></i> <span>Publication</span>
                             </a>
                             <ul class="treeview-menu">
-								<li class="active">
+                                <li class="active">
                                     <a href="<?php echo site_url('Category/index');?>"><i class="fa fa-cubes"></i> Catégories</a>
                                 </li>
-								<li>
+                                <li>
                                     <a href="<?php echo site_url('article/index');?>"><i class="fa fa-list-ul"></i> Articles</a>
                                 </li>
                                 <li>
                                     <a href="<?php echo site_url('commentaire/index');?>"><i class="fa fa-comment"></i> Commentaires</a>
                                 </li>
-							</ul>
+                            </ul>
                         </li>
-						
-						<li>
+                        
+                        <li>
                             <a href="#">
                                 <i class="fa fa-paw"></i> <span>Contact</span>
                             </a>
                             <ul class="treeview-menu">
-								
-								<li>
+                                
+                                <li>
                                     <a href="<?php echo site_url('client/index');?>"><i class="fa fa-list-ul"></i> Clients</a>
                                 </li>
                                 <li>
                                     <a href="<?php echo site_url('temoigange/index');?>"><i class="fa fa-list-ul"></i> Temoiganges</a>
                                 </li>
-							</ul>
+                            </ul>
                         </li>
-						
-						<li>
+                        
+                        <li>
                             <a href="#">
                                 <i class="fa fa-envelope"></i> <span>Communication</span>
                             </a>
                             <ul class="treeview-menu">
-								<li>
+                                <li>
                                     <a href="<?php echo site_url('message/index');?>"><i class="fa fa-list-ul"></i> Messages</a>
                                 </li>
                                 <li>
                                     <a href="<?php echo site_url('newsletter/index');?>"><i class="fa fa-list-ul"></i> Abonnement</a>
                                 </li>
-							</ul>
+                            </ul>
                         </li>
-						
-						<li>
+                        
+                        <li>
                             <a href="#">
                                 <i class="fa fa-cogs"></i> <span>Administraion</span>
                             </a>
                             <ul class="treeview-menu">
-					
-								<li>
+                    
+                                <li>
                                     <a href="<?php echo site_url('service/index');?>"><i class="fa fa-list-ul"></i> Services</a>
                                 </li>
                                 <li>
                                     <a href="<?php echo site_url('user/index');?>"><i class="fa fa-users"></i> Utilisateurs</a>
                                 </li>
-							</ul>
+                            </ul>
                         </li>
-						
+                        
                     </ul>
                 </section>
                 <!-- /.sidebar -->
+
+                <?php endif; ?>
             </aside>
 
             <!-- Content Wrapper. Contains page content -->
